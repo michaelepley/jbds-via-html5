@@ -5,7 +5,6 @@
 # rhel-6-server-rpms
 # rhel-6-server-optional-rpms
 # rhel-6-server-supplementary-rpms
-# jb-ews-1-for-rhel-6-server-rpms (provides tomcat6 package)
 #
 SM_POOL_ID="INSERT VALID POOL ID HERE"
 
@@ -30,7 +29,7 @@ subscription-manager attach --pool="$SM_POOL_ID"
 # enable the required repos
 subscription-manager repos --disable="*"
 
-for repoid in rhel-6-server-supplementary-rpms rhel-6-server-rpms rhel-6-server-optional-rpms jb-ews-1-for-rhel-6-server-rpms
+for repoid in rhel-6-server-supplementary-rpms rhel-6-server-rpms rhel-6-server-optional-rpms
 do
   subscription-manager repos --enable=$repoid
 done
