@@ -1,4 +1,14 @@
 
+Overview
+--------
+
+This project enables JBDS to run in a browser by leveraging the guacamole
+project to translate Xvnc events to HTML5.  This same method can be used
+to run any XWindows application via a browser.  My goal was to evenually
+convert this to an OpenShift cartridge so developers could self-provision
+their IDE and then develop their apps, with both the IDE and the apps
+being hosted on OpenShift.
+
 Installation
 ------------
 
