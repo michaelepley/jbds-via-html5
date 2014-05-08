@@ -62,7 +62,7 @@ chkconfig guacd off
 
 # set up JBDS
 rm -fr /usr/share/jbdevstudio
-java -jar resources/jbdevstudio-product-universal-7.1.0.Beta1-v20131102-1529-B493.jar resources/InstallConfigRecord.xml
+java -jar resources/jbdevstudio-product-universal-7.1.1.GA-v20140314-2145-B688.jar resources/InstallConfigRecord.xml
 chcon -R system_u:object_r:usr_t:s0 /usr/share/jbdevstudio
 
 # enable access through firewall
