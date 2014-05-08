@@ -16,9 +16,16 @@ Make sure that the 'resources' directory contains the file:
 
     jbdevstudio-product-universal-7.1.1.GA-v20140314-2145-B688.jar
 
-Install a RHEL 6.x basic server as a virtual guest.  As root on
-the virtual guest, create an unprivileged user to run the JBDS web
-application:
+Install a RHEL 6.x minimal server as a virtual guest.  Make sure to add
+the package
+
+    openssh-clients
+
+during the installation (this is found under the Base collection of
+packages).
+
+After installation is complete, logon as root on the virtual guest and
+create an unprivileged user to run the JBDS web application:
 
     useradd -c "JBDS User" jbdsuser
     passwd jbdsuser
@@ -36,9 +43,11 @@ packages as root:
 
     su
     ./root-setup.sh
-    exit
 
-As the unprivileged user, run the setup script:
+Reboot the virtual guest after the script completes.
+
+Once the virtual guest is started, logon as the unprivileged user and
+run the setup script:
 
     ./setup.sh
 
