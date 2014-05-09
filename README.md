@@ -73,6 +73,15 @@ To stop everything, use the stop script:
 
     ./stop.sh
 
+Screenshots
+-----------
+
+The screenshots directory shows the normal user progression of logging
+in to guacamole and selecting the active desktop from the dashboard.
+The desktop will be scaled to fit within the browser window.  Because I
+pre-selected the geometry for the desktop, when I maximize the browser
+window the desktop scales to fill the browser.
+
 Files in 'resources' Directory
 --------------------------------------
 * epel-release-6-8.noarch.rpm	- Extra packages for Enterprise Linux
