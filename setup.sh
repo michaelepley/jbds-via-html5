@@ -35,3 +35,10 @@ echo "VNCPASS" | vncpasswd -f > .vnc/passwd
 chmod 600 .vnc/passwd
 chmod 740 .vnc
 
+# start it one time to create the metadata in the workspace so we can
+# override settings in the IDE prefs.  Specifically, turn off the prompt
+# at exit
+./start.sh
+./stop.sh
+echo "EXIT_PROMPT_ON_CLOSE_LAST_WINDOW=false" >> workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.ide.prefs
+
