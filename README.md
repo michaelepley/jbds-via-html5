@@ -73,6 +73,14 @@ To stop everything, use the stop script:
 
     ./stop.sh
 
+Video
+-----
+
+There's a [video](https://vimeo.com/95063680) demonstrating the installation and use of this capability.
+An unprivileged user on a guest VM hosts the Xvnc server, JBoss Developer
+Studio, and the guacamole server and then a browser is used to access
+and build a project with JBDS.
+
 Screenshots
 -----------
 
