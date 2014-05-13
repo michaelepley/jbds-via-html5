@@ -39,6 +39,8 @@ chmod 740 .vnc
 # override settings in the IDE prefs.  Specifically, turn off the prompt
 # at exit
 ./start.sh
+DISPLAY=:1 wmctrl -c "JBoss Developer Studio"
+pkill jbdevstudio
 ./stop.sh
 echo "EXIT_PROMPT_ON_CLOSE_LAST_WINDOW=false" >> workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.ide.prefs
 
