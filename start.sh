@@ -30,7 +30,16 @@ echo "JBDS (Java) launched."
 echo
 
 # wait for JBDS to fully start up and get past splash screen
-sleep 30
+echo -n "Wait up to 30 seconds for JBDS to fully start "
+for j in {1..6}
+do
+  if [ ! "`DISPLAY=:1 wmctrl -l | grep 'JBoss Developer Studio'`" ]
+  then
+    echo -n "."
+    sleep 5
+  fi
+done
+echo
 
 DISPLAY=:1 wmctrl -r "JBoss Developer Studio" -b add,fullscreen
 echo "JBDS now in fullscreen"
