@@ -18,7 +18,14 @@ echo "Xvnc and fluxbox launched."
 
 # start JBDS with an overridden LD_LIBRARY_PATH to avoid SIGSEGV issues
 # with native library mismatches
-LIB_BASE_DIR=/usr/share/jbdevstudio/studio/plugins LD_LIBRARY_PATH=${LIB_BASE_DIR}/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.1.200.v20140116-2212:${LIB_BASE_DIR}/org.mozilla.xulrunner.gtk.linux.x86_64_1.9.2.19pre/xulrunner:${LIB_BASE_DIR}/org.mozilla.xulrunner.gtk.linux.x86_64_1.9.2.19pre/xulrunner/components:${LD_LIBRARY_PATH} DISPLAY=:1 /usr/share/jbdevstudio/jbdevstudio -nosplash -data $HOME/workspace &
+JBDS_INSTALL_DIR=/usr/share/jbdevstudio
+
+for libdir in `find ${JBDS_INSTALL_DIR} -type f -name '*.so' -exec dirname {} \; | sort -u`
+do
+  LD_LIBRARY_PATH=${libdir}:${LD_LIBRARY_PATH}
+done
+
+LD_LIBRARY_PATH=${LD_LIBRARY_PATH} DISPLAY=:1 /usr/share/jbdevstudio/jbdevstudio -nosplash -data $HOME/workspace &
 echo "JBDS (Java) launched."
 echo
 
