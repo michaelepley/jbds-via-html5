@@ -9,14 +9,16 @@ GUACD_PID=$HOME/.guacamole/guacd.pid
 
 # TODO: figure out how to resize VNC display to match user's browser pane
 
-vncserver :1 -name "JBDS via HTML5" -geometry 1280x1024 -depth 24
+vncserver :1 -name "JBDS via HTML5" -geometry 1920x908 -depth 24
 echo "Xvnc and fluxbox launched."
 
 # start guacd and tomcat6
 /usr/sbin/guacd -b localhost -l 4822 -p $GUACD_PID
 /usr/sbin/tomcat6 start
 
-DISPLAY=:1 /usr/share/jbdevstudio/jbdevstudio -nosplash -data $HOME/workspace &
+# start JBDS with an overridden LD_LIBRARY_PATH to avoid SIGSEGV issues
+# with native library mismatches
+LIB_BASE_DIR=/usr/share/jbdevstudio/studio/plugins LD_LIBRARY_PATH=${LIB_BASE_DIR}/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.1.200.v20140116-2212:${LIB_BASE_DIR}/org.mozilla.xulrunner.gtk.linux.x86_64_1.9.2.19pre/xulrunner:${LIB_BASE_DIR}/org.mozilla.xulrunner.gtk.linux.x86_64_1.9.2.19pre/xulrunner/components:${LD_LIBRARY_PATH} DISPLAY=:1 /usr/share/jbdevstudio/jbdevstudio -nosplash -data $HOME/workspace &
 echo "JBDS (Java) launched."
 echo
 

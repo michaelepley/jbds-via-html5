@@ -24,16 +24,16 @@ do
       DISPLAY=:1 wmctrl -c "JBoss Developer Studio"
  
       echo -n "Wait up to 30 seconds for JBDS to close " 
-      for j in {1..15}
+      for j in {1..6}
       do
         if [ ! -z "`DISPLAY=:1 wmctrl -l | grep 'JBoss Developer Studio'`" ]
         then
           echo -n "."
-          sleep 2
+          sleep 5
         fi
       done
       echo
- 
+
       # if java process still running then kill it 
       pkill java
     fi
