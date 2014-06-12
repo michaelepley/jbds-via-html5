@@ -93,7 +93,7 @@ window the desktop scales to fill the browser.
 Files in 'resources' Directory
 --------------------------------------
 * epel-release-6-8.noarch.rpm	- Extra packages for Enterprise Linux
-* guacamole-0.8.3.war		- guacamole web app to translate guacd events to HTML5
+* guacamole-0.8.4.war		- guacamole web app to translate guacd events to HTML5
 * guacamole.properties		- sets guacd host/port and authentication for web user 
 * InstallConfigRecord.xml	- automates installation of JBoss Developer Studio 7
 * user-mapping.xml		- defines auth for web user and guacd to VNC
