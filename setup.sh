@@ -17,7 +17,7 @@ pushd tomcat6
     sed -i 's/^\(CATALINA_PID=\)..*/\1\"\$HOME\/tomcat6\/run\/tomcat6.pid\"/g' tomcat6.conf
   popd
 
-  cp $HOME/resources/guacamole-0.8.3.war webapps/guacamole.war
+  cp $HOME/resources/guacamole-0.8.4.war webapps/guacamole.war
   chmod 644 webapps/guacamole.war
 popd
 
