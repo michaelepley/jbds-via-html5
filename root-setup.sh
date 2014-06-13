@@ -65,6 +65,24 @@ rm -fr /usr/share/jbdevstudio
 java -jar resources/jbdevstudio-product-universal-7.1.1.GA-v20140314-2145-B688.jar resources/InstallConfigRecord.xml
 chcon -R system_u:object_r:usr_t:s0 /usr/share/jbdevstudio
 
+# remove JBDS native libraries and checksum files  that are already
+# installed in system lib directories to avoid conflicts
+
+for ext in so chk
+do
+  for jbdslib in `find /usr/share/jbdevstudio -name "*.$ext"`
+  do
+    jbdslib_basename=`basename $jbdslib`
+    for syslibdir in /lib64 /usr/lib64
+    do
+      for dummy in `find $syslibdir -name $jbdslib_basename`
+      do
+        [ -f $jbdslib ] && rm -f $jbdslib
+      done
+    done
+  done
+done
+
 # enable access through firewall
 lokkit -p 8080:tcp
 

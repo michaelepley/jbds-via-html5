@@ -16,16 +16,8 @@ echo "Xvnc and fluxbox launched."
 /usr/sbin/guacd -b localhost -l 4822 -p $GUACD_PID
 /usr/sbin/tomcat6 start
 
-# start JBDS with an overridden LD_LIBRARY_PATH to avoid SIGSEGV issues
-# with native library mismatches
-JBDS_INSTALL_DIR=/usr/share/jbdevstudio
-
-for libdir in `find ${JBDS_INSTALL_DIR} -type f -name '*.so' -exec dirname {} \; | sort -u`
-do
-  LD_LIBRARY_PATH=${libdir}:${LD_LIBRARY_PATH}
-done
-
-LD_LIBRARY_PATH=${LD_LIBRARY_PATH} DISPLAY=:1 /usr/share/jbdevstudio/jbdevstudio -nosplash -data $HOME/workspace &
+# start JBDS
+DISPLAY=:1 /usr/share/jbdevstudio/jbdevstudio -nosplash -data $HOME/workspace &
 echo "JBDS (Java) launched."
 echo
 
