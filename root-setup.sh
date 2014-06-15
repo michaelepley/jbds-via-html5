@@ -45,6 +45,8 @@ yum -y update
 yum -y localinstall resources/epel-release-6-8.noarch.rpm
 
 yum -y install \
+  abattis-cantarell-fonts \
+  gtk2-engines \
   java-1.7.0-openjdk-devel \
   java-1.6.0-openjdk-devel \
   java-1.6.0-openjdk \

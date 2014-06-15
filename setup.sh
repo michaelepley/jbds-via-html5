@@ -44,3 +44,9 @@ pkill jbdevstudio
 ./stop.sh
 echo "EXIT_PROMPT_ON_CLOSE_LAST_WINDOW=false" >> workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.ide.prefs
 
+# set fluxbox fonts
+cp resources/overlay .fluxbox
+
+# set up gtk theme
+cp resources/gtkrc-2.0 .gtkrc-2.0
+
