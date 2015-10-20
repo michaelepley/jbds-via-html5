@@ -1,2 +1,3 @@
+* Fonts are a mess on RHEL 7
 * Enable Xvnc window to resize based on user's browser pane
 * Convert this to a Docker image
