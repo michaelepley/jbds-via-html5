@@ -6,7 +6,7 @@ This project enables JBoss Developer Studio to run in a browser by
 leveraging the guacamole project to translate Xvnc events to HTML5.
 This same method can be used to run any XWindows application via a
 browser.  My goal is to convert this to an OpenShift 3 instant
-application so developers could self-provision their IDE and then
+application so developers can self-provision their IDE and then
 develop their apps, with both the IDE and the apps being hosted on
 OpenShift.
 
