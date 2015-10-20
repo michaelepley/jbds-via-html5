@@ -1,11 +1,12 @@
 <user-mapping>
-	
-    <!-- Per-user authentication and config information -->
-    <authorize username="openshift" password="changeme">
-        <protocol>vnc</protocol>
-        <param name="hostname">localhost</param>
-        <param name="port">5901</param>
-        <param name="password">VNCPASS</param>
+    <authorize username="openshift"
+            password="4cb9c8a8048fd02294477fcb1a41191a"
+            encoding="md5">
+        <connection name="localhost">
+            <protocol>vnc</protocol>
+            <param name="hostname">localhost</param>
+            <param name="port">5901</param>
+            <param name="password">VNCPASS</param>
+        </connection>
     </authorize>
-
 </user-mapping>

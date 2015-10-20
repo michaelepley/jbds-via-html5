@@ -5,44 +5,35 @@ Overview
 This project enables JBoss Developer Studio to run in a browser by
 leveraging the guacamole project to translate Xvnc events to HTML5.
 This same method can be used to run any XWindows application via a
-browser.  My goal was to evenually convert this to an OpenShift cartridge
-so developers could self-provision their IDE and then develop their apps,
-with both the IDE and the apps being hosted on OpenShift.
+browser.  My goal is to convert this to an OpenShift 3 instant
+application so developers could self-provision their IDE and then
+develop their apps, with both the IDE and the apps being hosted on
+OpenShift.
 
 Installation
 ------------
 
 Make sure that the 'resources' directory contains the file:
 
-    jbdevstudio-product-universal-7.1.1.GA-v20140314-2145-B688.jar
+    jboss-devstudio-8.1.0.GA-installer-standalone.jar
 
-Install a RHEL 6.x minimal server as a virtual guest.  Make sure to add
-the package
+Install a RHEL 7.x minimal server as a virtual guest.  During
+installation, add an unprivileged user that has administrator
+privileges via sudo.
 
-    openssh-clients
-
-during the installation (this is found under the Base collection of
-packages).
-
-After installation is complete, logon as root on the virtual guest and
-create an unprivileged user to run the JBDS web application:
-
-    useradd -c "JBDS User" jbdsuser
-    passwd jbdsuser
-
-On the host server, copy all the files in this directory to the
-unprivileged user account:
+Copy all the files in this directory to the unprivileged user account
+on the guest VM:
 
     scp -r * jbdsuser@192.168.122.40:
 
-where 192.168.122.40 should be substituted with the IP address of the
-virtual guest.
+where jbdsuser and 192.168.122.40 should be substituted with the
+unprivileged user name and IP address of the virtual guest,
+respectively.
 
-Logon as the jbdsuser on the virtual guest.  Install the necessary
-packages as root:
+Logon as the unprivileged user on the virtual guest.  To install
+the required packages, run the command:
 
-    su
-    ./root-setup.sh
+    sudo ./root-setup.sh
 
 Reboot the virtual guest after the script completes.
 
@@ -58,7 +49,8 @@ To start all the required components, use the start script:
 
     ./start.sh
 
-Next, browse to the guacamole app from the host server using the URL:
+Next, browse to the guacamole web application from the host server
+using the URL:
 
     http://192.168.122.40:8080/guacamole
 
@@ -92,12 +84,7 @@ window the desktop scales to fill the browser.
 
 Files in 'resources' Directory
 --------------------------------------
-* epel-release-6-8.noarch.rpm	- Extra packages for Enterprise Linux
-* gtkrc-2.0			- set GTK theme for better application font
-* guacamole-0.8.4.war		- guacamole web app to translate guacd events to HTML5
-* guacamole.properties		- sets guacd host/port and authentication for web user 
-* InstallConfigRecord.xml	- automates installation of JBoss Developer Studio 7
-* overlay			- .fluxbox/overlay to set fluxbox windowing fonts
-* user-mapping.xml		- defines auth for web user and guacd to VNC
-* xstartup			- starts fluxbox simple window manager
+* epel-release-latest-7.noarch.rpm	- Extra packages for Enterprise Linux
+* InstallConfigRecord.xml		- automates installation of JBDS 8.1.0
+* user-mapping.xml			- defines auth for web user and guacd to VNC
 

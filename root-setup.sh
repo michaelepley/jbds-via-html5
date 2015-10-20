@@ -2,11 +2,14 @@
 
 # supply a valid subscription manager pool id to access the following channels:
 #
-# rhel-6-server-rpms
-# rhel-6-server-optional-rpms
-# rhel-6-server-supplementary-rpms
-#
-SM_POOL_ID="INSERT VALID POOL ID HERE"
+# rhel-7-server-rpms
+# rhel-7-server-optional-rpms
+# rhel-7-server-supplementary-rpms
+# rhel-7-server-extras-rpms
+
+# Insert your subscription manager pool id here, if known.  Otherwise,
+# this script will try to dynamically determine the pool id.
+SM_POOL_ID=
 
 function usage {
   echo
@@ -24,48 +27,77 @@ fi
 # register with Red Hat subscription manager
 echo "Please provide your RHN credentials"
 subscription-manager register
+
+# if no SM_POOL_ID defined, attempt to find the Red Hat employee
+# "kitchen sink" SKU (of course, this only works for RH employees)
+if [ "x${SM_POOL_ID}" = "x" ]
+then
+  SM_POOL_ID=`subscription-manager list --available | \
+      grep 'Subscription Name:\|Pool ID:\|System Type' | \
+      grep -B2 'Virtual' | \
+      grep -A1 'Employee SKU' | \
+      grep 'Pool ID:' | awk '{print $3}'`
+
+  # exit if none found
+  if [ "x${SM_POOL_ID}" = "x" ]
+  then
+    echo "No subcription manager pool id found.  Exiting"
+    exit 1
+  fi
+fi
+
+# attach the desired pool id
 subscription-manager attach --pool="$SM_POOL_ID"
 
 # enable the required repos
 subscription-manager repos --disable="*"
+subscription-manager repos --enable=rhel-7-server-rpms \
+                           --enable=rhel-7-server-optional-rpms \
+                           --enable=rhel-7-server-supplementary-rpms \
+                           --enable=rhel-7-server-extras-rpms
 
-for repoid in rhel-6-server-supplementary-rpms rhel-6-server-rpms rhel-6-server-optional-rpms
-do
-  subscription-manager repos --enable=$repoid
-done
+rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
 
+# install EPEL to get the extra packages for gtk2-engines, guacamole,
+# guacd, libguac-client-vnc, and openbox
+
+yum -y localinstall resources/epel-release-latest-7.noarch.rpm
+
+# speed up updates
+yum -y install deltarpm
+
+# update the install
+yum -y update
 yum clean all
 
-# apply all updates
-yum -y update
+# install the packages
+yum -y install tigervnc-server gtk2 java-1.8.0-openjdk-devel liberation-*-fonts
+yum -y install libguac-client-vnc guacd openbox guacamole
 
-# install EPEL to get the extra packages for guacamole, fluxbox,
-# and wmctrl
+# NOTES
+#
+# don't install abattis-cantarell-fonts xorg-x11-utils
+# don't install gtk2-engines
+#
+# figure out what the hell openbox does
+# xorg-x11-utils for xprop to do what wmctrl used to do
 
-yum -y localinstall resources/epel-release-6-8.noarch.rpm
+# make sure that tomcat and guacd do not auto-start at boot
+systemctl disable tomcat
+systemctl disable guacd
 
-yum -y install \
-  abattis-cantarell-fonts \
-  gtk2-engines \
-  java-1.7.0-openjdk-devel \
-  java-1.6.0-openjdk-devel \
-  java-1.6.0-openjdk \
-  tomcat6 \
-  tigervnc-server \
-  libguac \
-  libguac-client-vnc \
-  guacd \
-  fluxbox \
-  wmctrl
-
-# make sure that tomcat6 and guacd do not auto-start at boot
-chkconfig tomcat6 off
-chkconfig guacd off
+# update the user-mapping.xml file for guacamole
+cp resources/user-mapping.xml /etc/guacamole
 
 # set up JBDS
 rm -fr /usr/share/jbdevstudio
-java -jar resources/jbdevstudio-product-universal-7.1.1.GA-v20140314-2145-B688.jar resources/InstallConfigRecord.xml
+java -jar resources/jboss-devstudio-8.1.0.GA-installer-standalone.jar \
+    resources/InstallConfigRecord.xml
 chcon -R system_u:object_r:usr_t:s0 /usr/share/jbdevstudio
+
+# enable access through firewall
+firewall-cmd --permanent --zone=public --add-port=8080/tcp
+firewall-cmd --reload
 
 # remove JBDS native libraries and checksum files  that are already
 # installed in system lib directories to avoid conflicts
@@ -84,7 +116,4 @@ do
     done
   done
 done
-
-# enable access through firewall
-lokkit -p 8080:tcp
 
