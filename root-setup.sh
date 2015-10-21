@@ -71,7 +71,8 @@ yum -y update
 yum clean all
 
 # install the packages
-yum -y install tigervnc-server gtk2 java-1.8.0-openjdk-devel liberation-*-fonts
+yum -y install tigervnc-server gtk2 java-1.8.0-openjdk-devel \
+    liberation-fonts-common liberation-sans-fonts
 yum -y install libguac-client-vnc guacd openbox guacamole
 
 # NOTES
