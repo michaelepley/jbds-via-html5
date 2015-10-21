@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 # waits until desired window, with name in $1, is active
 function wait_for_window {
@@ -21,8 +21,8 @@ vncwin=`DISPLAY=:1 wmctrl -l | grep 'VNC config' | cut -d' ' -f1`
 DISPLAY=:1 wmctrl -i -c $vncwin
 
 # fullscreen JBDS
-wait_for_window 'JBoss - JBoss Central - JBoss Developer Studio'
+wait_for_window ' - JBoss Developer Studio'
 jbdswin=`DISPLAY=:1 wmctrl -l | \
-    grep 'JBoss - JBoss Central - JBoss Developer Studio' | \
+    grep ' - JBoss Developer Studio' | \
     cut -d' ' -f1`
 DISPLAY=:1 wmctrl -i -r $jbdswin -b add,fullscreen
