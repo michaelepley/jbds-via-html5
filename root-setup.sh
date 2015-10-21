@@ -58,8 +58,8 @@ subscription-manager repos --enable=rhel-7-server-rpms \
 
 rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
 
-# install EPEL to get the extra packages for gtk2-engines, guacamole,
-# guacd, libguac-client-vnc, and openbox
+# install EPEL to get the extra packages for guacamole, guacd,
+# libguac-client-vnc, and openbox
 
 yum -y localinstall resources/epel-release-latest-7.noarch.rpm
 
@@ -75,13 +75,7 @@ yum -y install tigervnc-server gtk2 java-1.8.0-openjdk-devel \
     liberation-fonts-common liberation-sans-fonts
 yum -y install libguac-client-vnc guacd openbox guacamole
 
-# NOTES
-#
-# don't install abattis-cantarell-fonts xorg-x11-utils
-# don't install gtk2-engines
-#
-# figure out what the hell openbox does
-# xorg-x11-utils for xprop to do what wmctrl used to do
+# TODO figure out if xorg-x11-utils for xprop to do what wmctrl used to do
 
 # make sure that tomcat and guacd do not auto-start at boot
 systemctl disable tomcat
