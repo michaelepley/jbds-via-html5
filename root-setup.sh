@@ -75,7 +75,11 @@ yum -y install tigervnc-server gtk2 java-1.8.0-openjdk-devel \
     liberation-fonts-common liberation-sans-fonts
 yum -y install libguac-client-vnc guacd openbox guacamole
 
-# TODO figure out if xorg-x11-utils for xprop to do what wmctrl used to do
+# install wmctrl since not in EPEL or standard channels
+WMCTRL_RPM=wmctrl-1.07-15.el7.nux.x86_64.rpm
+curl ftp://ftp.pbone.net/mirror/li.nux.ro/download/nux/dextop/el7/x86_64/$WMCTRL_RPM \
+    -o resources/$WMCTRL_RPM
+yum -y localinstall resources/$WMCTRL_RPM
 
 # make sure that tomcat and guacd do not auto-start at boot
 systemctl disable tomcat
